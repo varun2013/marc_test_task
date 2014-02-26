@@ -42,14 +42,76 @@ class Functions {
 
     public function sanitize($html=null,$allowedtags=null) {
         
-        //$htmlarray = simplexml_load_string($html);
-         $htmlarray = xml_parser_create();
-        xml_parse_into_struct($htmlarray, $html, $vals, $index);
+        $allowedtagstring='';
+        foreach($allowedtags as $key=>$tag){
+             $allowedtagstring.='<'.strtolower($key).'>';
+        }
+        $stripedhtml=strip_tags($html,"'".$allowedtagstring."'");
+        //echo $allowedtagstring; die;
+        $htmlarray = xml_parser_create();
+        xml_parse_into_struct($htmlarray, $stripedhtml, $vals, $index);
         xml_parser_free($htmlarray);
-        echo "<pre>"; print_r($vals);
+         $returnedArray=array();
         
-        die;
-        return $htmlarray;
+         foreach($vals as $key=>$data){
+                       
+                if(!empty($data['attributes'])){
+                    
+                    foreach($data['attributes'] as $key1=>$attribute){
+                        $allowedattributes=explode(",",$allowedtags[strtolower($data['tag'])]);
+                       
+                        if(in_array(strtolower($key1),$allowedattributes)){
+                               
+                        }else{
+                            unset($data['attributes'][$key1]);
+                        }
+                    }
+                    
+                    
+                }
+                 $returnedArray[]=$data;
+                
+          
+            
+        }
+    
+        $returnhtml='';
+        foreach($returnedArray as $element){
+        $htmldata='';
+           if($element['type']=='open'){
+               $htmldata.='<'.strtolower($element['tag']);
+               if(!empty($element['attributes'])){
+                   foreach($element['attributes'] as $key=>$attribute){
+                     $htmldata.=' '.strtolower($key)."="."'".$attribute."' ";  
+                   }
+               }
+                    
+                   $htmldata.='>'.$element['value'];
+              
+           }else if($element['type']=='complete'){
+              
+               $htmldata.='<'.strtolower($element['tag']);
+               if(!empty($element['attributes'])){
+                   foreach($element['attributes'] as $key=>$attribute){
+                     $htmldata.=' '.strtolower($key)."="."'".$attribute."'";  
+                   }
+                  
+               } 
+                   $htmldata.='>'.$element['value'].'</'.strtolower($element['tag']).'>';
+              
+               
+           }
+           else if($element['type']=='close'){
+                $htmldata.='</'.strtolower($element['tag']).">";
+               
+           }
+          
+           $returnhtml.=$htmldata;
+            
+        }
+        
+       
+        return $returnhtml;
         
     }
 

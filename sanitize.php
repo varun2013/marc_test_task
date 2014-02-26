@@ -98,7 +98,7 @@
                     },
                     success: function(result) {
                        
-                        $('.result').html(result);
+                        $('.result').text(result);
                         $('.result').css('display', 'block');
                     },
                 });

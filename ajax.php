@@ -60,6 +60,7 @@ if (isset($_POST['sortvalue'])) {
         
     }
     $returnedhtml=$function->sanitize($html,$allowedtags);
-    return $returnedhtml;
+    echo $returnedhtml; die;
+    
 }
 ?>
