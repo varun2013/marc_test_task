@@ -19,7 +19,7 @@ class Functions {
 
     public function checkdomain($domain = null) {
 
-        $validpattern = "/^([a-z0-9][a-z0-9\-\_]{0,61}[a-z0-9]\.|[a-z0-9]\.)*?[a-z]+\.[a-zA-z0-9]{2,6}$/";
+        $validpattern = "/^(?!.{254})(?:[a-z0-9][a-z0-9\-\_]{0,61}[a-z0-9]\.|[a-z0-9]{0,63}\.)*?[a-zA-z0-9]{2,6}$/";
         return preg_match($validpattern, $domain) ? "MATCH" : "NO MATCH";
     }
 
@@ -43,8 +43,10 @@ class Functions {
     public function sanitize($html=null,$allowedtags=null) {
         
         $allowedtagstring='';
+        if(!empty($allowedtags)){
         foreach($allowedtags as $key=>$tag){
              $allowedtagstring.='<'.strtolower($key).'>';
+        }
         }
         $stripedhtml=strip_tags($html,"'".$allowedtagstring."'");
         //echo $allowedtagstring; die;
@@ -52,7 +54,7 @@ class Functions {
         xml_parse_into_struct($htmlarray, $stripedhtml, $vals, $index);
         xml_parser_free($htmlarray);
          $returnedArray=array();
-        
+        if(!empty($vals)){
          foreach($vals as $key=>$data){
                        
                 if(!empty($data['attributes'])){
@@ -74,8 +76,10 @@ class Functions {
           
             
         }
-    
+    }
         $returnhtml='';
+        //echo "<pre>"; print_r($returnedArray); die;
+        if(!empty($returnedArray)){
         foreach($returnedArray as $element){
         $htmldata='';
            if($element['type']=='open'){
@@ -109,11 +113,15 @@ class Functions {
            $returnhtml.=$htmldata;
             
         }
-        
+        }else{
+            $returnhtml.=$html;
+            
+        }
        
         return $returnhtml;
         
-    }
+    
+   }
 
     public function truncateString($string = null, $length = 0, $replacewith = "---", $word_break = false, $middle = false) {
         $result = $string;

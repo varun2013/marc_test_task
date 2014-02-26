@@ -55,9 +55,11 @@ if (isset($_POST['sortvalue'])) {
     $html=$_POST['htmlstring'];
     $tagsattributes=$_POST['allowedtags'];
     $allowedtags=array();
+    if(!empty($tagsattributes)){
     foreach($tagsattributes as $tag){
         $allowedtags[$tag['tag']]=$tag['attributes'];
         
+    }
     }
     $returnedhtml=$function->sanitize($html,$allowedtags);
     echo $returnedhtml; die;
