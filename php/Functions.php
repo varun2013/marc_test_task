@@ -19,7 +19,7 @@ class Functions {
 
     public function checkdomain($domain = null) {
 
-        $validpattern = "/^(?!.{254})(?:[a-z0-9][a-z0-9\-\_]{0,61}[a-z0-9]\.|[a-z0-9]{0,63}\.)*?[a-zA-z0-9]{0,62}$/";
+        $validpattern = "/^(?!.{254})(?:[a-zA-Z0-9][a-zA-Z0-9\-\_]{0,61}[a-zA-Z0-9]\.|[a-zA-Z0-9]{0,63}\.)*?[a-zA-Z0-9]{0,62}$/";
         return preg_match($validpattern, $domain) ? "MATCH" : "NO MATCH";
     }
 
