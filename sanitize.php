@@ -85,7 +85,7 @@
                   
                     
                 });
-               $.ajax({
+                $.ajax({
                     type: 'POST',
                     url: 'ajax.php',
                     data: {

@@ -1,8 +1,8 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sa">
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Php Demo Task</title>
@@ -53,13 +53,13 @@
                                 <div class="control-group">
                                     <div class="control-label" >Break words</div>                         
                                     <div class="control-input">
-                                        <input type="checkbox" name="breakwords" value="true" /> 
+                                        <input type="checkbox" name="breakwords" value=true /> 
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="control-label" >Truncate middle </div>                         
                                     <div class="control-input">
-                                        <input type="checkbox" name="middle" value="true" />  
+                                        <input type="checkbox" name="middle" value=true />  
                                     </div>
                                 </div>
 

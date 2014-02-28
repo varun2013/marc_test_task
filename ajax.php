@@ -44,16 +44,16 @@ if (isset($_POST['sortvalue'])) {
 
     $string = isset($_POST['string']) ? $_POST['string'] : '';
     $length = isset($_POST['length']) ? $_POST['length'] : '';
-    $replaceString = (isset($_POST['replacewith']) && !empty($_POST['replacewith']) ) ? $_POST['replacewith'] : null;
-    $word_break = isset($_POST['word_break']) ? $_POST['word_break'] : 'false';
-    $middle = isset($_POST['middle']) ? $_POST['middle'] : 'false';
+    $replaceString = (isset($_POST['replacewith']) && !empty($_POST['replacewith']) ) ? $_POST['replacewith'] : '...';
+    $word_break = isset($_POST['word_break']) ? true : false ;
+    $middle = isset($_POST['middle']) ? true : false;
     $resultData = $function->truncateString($string, $length, $replaceString, $word_break, $middle);
     echo $resultData;
     die;
 }else if(isset($_POST['sanitize'])){
    // echo "<pre>"; print_r($_POST); die;
-    $html=$_POST['htmlstring'];
-    $tagsattributes=$_POST['allowedtags'];
+    $html=isset($_POST['htmlstring']) ? $_POST['htmlstring'] : '';
+    $tagsattributes=isset($_POST['allowedtags']) ? $_POST['allowedtags']: array();
     $allowedtags=array();
     if(!empty($tagsattributes)){
     foreach($tagsattributes as $tag){
@@ -61,6 +61,7 @@ if (isset($_POST['sortvalue'])) {
         
     }
     }
+    
     $returnedhtml=$function->sanitize($html,$allowedtags);
     echo $returnedhtml; die;
     
